@@ -5,15 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataStructureWiki2
+
+// 6.1 Create a separate class file to hold the four data items of the Data Structure (use the Data
+// Structure Matrix as a guide). Use private properties for the fields which must be of type
+// “string”. The class file must have separate setters and getters, add an appropriate IComparable
+// for the Name attribute. Save the class as “Information.cs”.
+
 {
-    internal class DataStructure : IComparable<DataStructure>
+    internal class Information : IComparable<Information>
     {
         private string Name;
         private string Category;
         private string Structure;
         private string Definition;
 
-        public int CompareTo(DataStructure other)
+        public int CompareTo(Information other)
         {
             // The data structure comparison depends on the comparison of the String name values.
             return Name.CompareTo(other.Name);

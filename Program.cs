@@ -16,7 +16,7 @@ namespace DataStructureWiki2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            Application.Run(new DataStructureWiki2());
         }
     }
 }

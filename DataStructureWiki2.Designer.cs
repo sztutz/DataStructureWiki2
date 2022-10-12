@@ -1,6 +1,6 @@
 ﻿namespace DataStructureWiki2
 {
-    partial class Main
+    partial class DataStructureWiki2
     {
         /// <summary>
         /// Required designer variable.
@@ -36,19 +36,23 @@
             this.LabelDefinition = new System.Windows.Forms.Label();
             this.TextBoxName = new System.Windows.Forms.TextBox();
             this.TextBoxDefinition = new System.Windows.Forms.TextBox();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.ListViewDataStructure = new System.Windows.Forms.ListView();
+            this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderCategory = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ButtonSearch = new System.Windows.Forms.Button();
             this.TextBoxSearch = new System.Windows.Forms.TextBox();
             this.ButtonSave = new System.Windows.Forms.Button();
             this.ButtonLoad = new System.Windows.Forms.Button();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
+            this.LabelStatusStrip = new System.Windows.Forms.ToolStripStatusLabel();
             this.ComboBoxCategory = new System.Windows.Forms.ComboBox();
             this.GroupBoxStructure = new System.Windows.Forms.GroupBox();
-            this.RadioButtonLinear = new System.Windows.Forms.RadioButton();
             this.RadioButtonNonLinear = new System.Windows.Forms.RadioButton();
+            this.RadioButtonLinear = new System.Windows.Forms.RadioButton();
             this.LabelStucture = new System.Windows.Forms.Label();
             this.LabelSearch = new System.Windows.Forms.Label();
             this.LabelDataStructures = new System.Windows.Forms.Label();
+            this.StatusStrip.SuspendLayout();
             this.GroupBoxStructure.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,6 +65,7 @@
             this.ButtonAdd.TabIndex = 0;
             this.ButtonAdd.Text = "add";
             this.ButtonAdd.UseVisualStyleBackColor = false;
+            this.ButtonAdd.Click += new System.EventHandler(this.ButtonAdd_Click);
             // 
             // ButtonEdit
             // 
@@ -71,6 +76,7 @@
             this.ButtonEdit.TabIndex = 1;
             this.ButtonEdit.Text = "edit";
             this.ButtonEdit.UseVisualStyleBackColor = false;
+            this.ButtonEdit.Click += new System.EventHandler(this.ButtonEdit_Click);
             // 
             // ButtonDelete
             // 
@@ -81,6 +87,7 @@
             this.ButtonDelete.TabIndex = 2;
             this.ButtonDelete.Text = "delete";
             this.ButtonDelete.UseVisualStyleBackColor = false;
+            this.ButtonDelete.Click += new System.EventHandler(this.ButtonDelete_Click);
             // 
             // LabelName
             // 
@@ -123,16 +130,32 @@
             this.TextBoxDefinition.Name = "TextBoxDefinition";
             this.TextBoxDefinition.Size = new System.Drawing.Size(192, 121);
             this.TextBoxDefinition.TabIndex = 10;
-
             // 
-            // listView1
+            // ListViewDataStructure
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(216, 25);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(238, 308);
-            this.listView1.TabIndex = 11;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.ListViewDataStructure.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderName,
+            this.columnHeaderCategory});
+            this.ListViewDataStructure.FullRowSelect = true;
+            this.ListViewDataStructure.HideSelection = false;
+            this.ListViewDataStructure.Location = new System.Drawing.Point(216, 25);
+            this.ListViewDataStructure.MultiSelect = false;
+            this.ListViewDataStructure.Name = "ListViewDataStructure";
+            this.ListViewDataStructure.Scrollable = false;
+            this.ListViewDataStructure.Size = new System.Drawing.Size(240, 308);
+            this.ListViewDataStructure.TabIndex = 11;
+            this.ListViewDataStructure.UseCompatibleStateImageBehavior = false;
+            this.ListViewDataStructure.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeaderName
+            // 
+            this.columnHeaderName.Text = "Name";
+            this.columnHeaderName.Width = 120;
+            // 
+            // columnHeaderCategory
+            // 
+            this.columnHeaderCategory.Text = "Category";
+            this.columnHeaderCategory.Width = 120;
             // 
             // ButtonSearch
             // 
@@ -160,7 +183,7 @@
             this.ButtonSave.TabIndex = 14;
             this.ButtonSave.Text = "save";
             this.ButtonSave.UseVisualStyleBackColor = false;
-
+            this.ButtonSave.Click += new System.EventHandler(this.ButtonSave_Click);
             // 
             // ButtonLoad
             // 
@@ -171,15 +194,23 @@
             this.ButtonLoad.TabIndex = 15;
             this.ButtonLoad.Text = "load";
             this.ButtonLoad.UseVisualStyleBackColor = false;
+            this.ButtonLoad.Click += new System.EventHandler(this.ButtonLoad_Click);
             // 
             // StatusStrip
             // 
             this.StatusStrip.BackColor = System.Drawing.Color.PaleGreen;
+            this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LabelStatusStrip});
             this.StatusStrip.Location = new System.Drawing.Point(0, 405);
             this.StatusStrip.Name = "StatusStrip";
             this.StatusStrip.Size = new System.Drawing.Size(466, 22);
             this.StatusStrip.TabIndex = 16;
             this.StatusStrip.Text = "statusStrip1";
+            // 
+            // LabelStatusStrip
+            // 
+            this.LabelStatusStrip.Name = "LabelStatusStrip";
+            this.LabelStatusStrip.Size = new System.Drawing.Size(0, 17);
             // 
             // ComboBoxCategory
             // 
@@ -200,17 +231,6 @@
             this.GroupBoxStructure.TabIndex = 18;
             this.GroupBoxStructure.TabStop = false;
             // 
-            // RadioButtonLinear
-            // 
-            this.RadioButtonLinear.AutoSize = true;
-            this.RadioButtonLinear.Location = new System.Drawing.Point(17, 19);
-            this.RadioButtonLinear.Name = "RadioButtonLinear";
-            this.RadioButtonLinear.Size = new System.Drawing.Size(54, 17);
-            this.RadioButtonLinear.TabIndex = 0;
-            this.RadioButtonLinear.TabStop = true;
-            this.RadioButtonLinear.Text = "Linear";
-            this.RadioButtonLinear.UseVisualStyleBackColor = true;
-            // 
             // RadioButtonNonLinear
             // 
             this.RadioButtonNonLinear.AutoSize = true;
@@ -221,6 +241,17 @@
             this.RadioButtonNonLinear.TabStop = true;
             this.RadioButtonNonLinear.Text = "Non-Linear";
             this.RadioButtonNonLinear.UseVisualStyleBackColor = true;
+            // 
+            // RadioButtonLinear
+            // 
+            this.RadioButtonLinear.AutoSize = true;
+            this.RadioButtonLinear.Location = new System.Drawing.Point(17, 19);
+            this.RadioButtonLinear.Name = "RadioButtonLinear";
+            this.RadioButtonLinear.Size = new System.Drawing.Size(54, 17);
+            this.RadioButtonLinear.TabIndex = 0;
+            this.RadioButtonLinear.TabStop = true;
+            this.RadioButtonLinear.Text = "Linear";
+            this.RadioButtonLinear.UseVisualStyleBackColor = true;
             // 
             // LabelStucture
             // 
@@ -245,38 +276,11 @@
             this.LabelDataStructures.AutoSize = true;
             this.LabelDataStructures.Location = new System.Drawing.Point(213, 9);
             this.LabelDataStructures.Name = "LabelDataStructures";
-            this.LabelDataStructures.Size = new System.Drawing.Size(81, 13);
+            this.LabelDataStructures.Size = new System.Drawing.Size(84, 13);
             this.LabelDataStructures.TabIndex = 21;
-            this.LabelDataStructures.Text = "Data Strucures:";
+            this.LabelDataStructures.Text = "Data Structures:";
             // 
-            // DataStructureWiki
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LimeGreen;
-            this.ClientSize = new System.Drawing.Size(466, 427);
-            this.Controls.Add(this.LabelDataStructures);
-            this.Controls.Add(this.LabelSearch);
-            this.Controls.Add(this.LabelStucture);
-            this.Controls.Add(this.GroupBoxStructure);
-            this.Controls.Add(this.ComboBoxCategory);
-            this.Controls.Add(this.StatusStrip);
-            this.Controls.Add(this.ButtonLoad);
-            this.Controls.Add(this.ButtonSave);
-            this.Controls.Add(this.TextBoxSearch);
-            this.Controls.Add(this.ButtonSearch);
-            this.Controls.Add(this.listView1);
-            this.Controls.Add(this.TextBoxDefinition);
-            this.Controls.Add(this.TextBoxName);
-            this.Controls.Add(this.LabelDefinition);
-            this.Controls.Add(this.LabelCategory);
-            this.Controls.Add(this.LabelName);
-            this.Controls.Add(this.ButtonDelete);
-            this.Controls.Add(this.ButtonEdit);
-            this.Controls.Add(this.ButtonAdd);
-            this.SuspendLayout();
-            // 
-            // Main
+            // DataStructureWiki2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -292,7 +296,7 @@
             this.Controls.Add(this.ButtonSave);
             this.Controls.Add(this.TextBoxSearch);
             this.Controls.Add(this.ButtonSearch);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.ListViewDataStructure);
             this.Controls.Add(this.TextBoxDefinition);
             this.Controls.Add(this.TextBoxName);
             this.Controls.Add(this.LabelDefinition);
@@ -301,8 +305,10 @@
             this.Controls.Add(this.ButtonDelete);
             this.Controls.Add(this.ButtonEdit);
             this.Controls.Add(this.ButtonAdd);
-            this.Name = "Main";
+            this.Name = "DataStructureWiki2";
             this.Text = "Data Structure Wiki 2";
+            this.StatusStrip.ResumeLayout(false);
+            this.StatusStrip.PerformLayout();
             this.GroupBoxStructure.ResumeLayout(false);
             this.GroupBoxStructure.PerformLayout();
             this.ResumeLayout(false);
@@ -320,7 +326,7 @@
         private System.Windows.Forms.Label LabelDefinition;
         private System.Windows.Forms.TextBox TextBoxName;
         private System.Windows.Forms.TextBox TextBoxDefinition;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView ListViewDataStructure;
         private System.Windows.Forms.Button ButtonSearch;
         private System.Windows.Forms.TextBox TextBoxSearch;
         private System.Windows.Forms.Button ButtonSave;
@@ -333,6 +339,9 @@
         private System.Windows.Forms.Label LabelStucture;
         private System.Windows.Forms.Label LabelSearch;
         private System.Windows.Forms.Label LabelDataStructures;
+        private System.Windows.Forms.ToolStripStatusLabel LabelStatusStrip;
+        private System.Windows.Forms.ColumnHeader columnHeaderName;
+        private System.Windows.Forms.ColumnHeader columnHeaderCategory;
     }
 }
 

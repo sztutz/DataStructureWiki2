@@ -60,7 +60,8 @@ namespace DataStructureWiki2
 
         private void PopulateComboBox()
         {
-            foreach (string line in File.ReadLines("Categories.txt")) // this needs to be fixed
+            string path = Path.Combine(Application.StartupPath, @"..\..\Categories.txt");
+            foreach (string line in File.ReadLines(path))
             {
                 ComboBoxCategory.Items.Add(line);
             }

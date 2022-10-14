@@ -329,29 +329,31 @@ namespace DataStructureWiki2
 
         // 6.15 The Wiki application will save data when the form closes. 
 
-        private async void DataStructureWiki2_FormClosing(object sender, FormClosingEventArgs e)
+        private void DataStructureWiki2_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try
+            if (Wiki.Count > 0)
             {
-                using (Stream stream = File.Open("AutoSave", FileMode.Create))
+                try
                 {
-                    using (var writer = new BinaryWriter(stream, Encoding.UTF8, false))
+                    using (Stream stream = File.Open("AutoSave.bin", FileMode.Create))
                     {
-                         for (int x = 0; x < Wiki.Count; x++)
+                        using (var writer = new BinaryWriter(stream, Encoding.UTF8, false))
                         {
-                            writer.Write(Wiki[x].GetName());
-                            writer.Write(Wiki[x].GetCategory());
-                            writer.Write(Wiki[x].GetStructure());
-                            writer.Write(Wiki[x].GetDefinition());
+                            for (int x = 0; x < Wiki.Count; x++)
+                            {
+                                writer.Write(Wiki[x].GetName());
+                                writer.Write(Wiki[x].GetCategory());
+                                writer.Write(Wiki[x].GetStructure());
+                                writer.Write(Wiki[x].GetDefinition());
+                            }
                         }
                     }
                 }
+                catch (IOException ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
-            catch (IOException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
         }
 
         // 6.16 All code is required to be adequately commented. Map the programming criteria and

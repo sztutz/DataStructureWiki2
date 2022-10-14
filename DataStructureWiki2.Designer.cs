@@ -36,7 +36,7 @@
             this.LabelDefinition = new System.Windows.Forms.Label();
             this.TextBoxName = new System.Windows.Forms.TextBox();
             this.TextBoxDefinition = new System.Windows.Forms.TextBox();
-            this.ListViewDataStructure = new System.Windows.Forms.ListView();
+            this.ListViewWiki = new System.Windows.Forms.ListView();
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderCategory = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ButtonSearch = new System.Windows.Forms.Button();
@@ -122,6 +122,7 @@
             this.TextBoxName.Name = "TextBoxName";
             this.TextBoxName.Size = new System.Drawing.Size(192, 20);
             this.TextBoxName.TabIndex = 7;
+            this.TextBoxName.DoubleClick += new System.EventHandler(this.TextBoxName_DoubleClick);
             // 
             // TextBoxDefinition
             // 
@@ -131,21 +132,22 @@
             this.TextBoxDefinition.Size = new System.Drawing.Size(192, 121);
             this.TextBoxDefinition.TabIndex = 10;
             // 
-            // ListViewDataStructure
+            // ListViewWiki
             // 
-            this.ListViewDataStructure.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ListViewWiki.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderName,
             this.columnHeaderCategory});
-            this.ListViewDataStructure.FullRowSelect = true;
-            this.ListViewDataStructure.HideSelection = false;
-            this.ListViewDataStructure.Location = new System.Drawing.Point(216, 25);
-            this.ListViewDataStructure.MultiSelect = false;
-            this.ListViewDataStructure.Name = "ListViewDataStructure";
-            this.ListViewDataStructure.Scrollable = false;
-            this.ListViewDataStructure.Size = new System.Drawing.Size(240, 308);
-            this.ListViewDataStructure.TabIndex = 11;
-            this.ListViewDataStructure.UseCompatibleStateImageBehavior = false;
-            this.ListViewDataStructure.View = System.Windows.Forms.View.Details;
+            this.ListViewWiki.FullRowSelect = true;
+            this.ListViewWiki.HideSelection = false;
+            this.ListViewWiki.Location = new System.Drawing.Point(216, 25);
+            this.ListViewWiki.MultiSelect = false;
+            this.ListViewWiki.Name = "ListViewWiki";
+            this.ListViewWiki.Scrollable = false;
+            this.ListViewWiki.Size = new System.Drawing.Size(240, 308);
+            this.ListViewWiki.TabIndex = 11;
+            this.ListViewWiki.UseCompatibleStateImageBehavior = false;
+            this.ListViewWiki.View = System.Windows.Forms.View.Details;
+            this.ListViewWiki.SelectedIndexChanged += new System.EventHandler(this.ListViewWiki_SelectedIndexChanged);
             // 
             // columnHeaderName
             // 
@@ -166,6 +168,7 @@
             this.ButtonSearch.TabIndex = 12;
             this.ButtonSearch.Text = "search";
             this.ButtonSearch.UseVisualStyleBackColor = false;
+            this.ButtonSearch.Click += new System.EventHandler(this.ButtonSearch_Click);
             // 
             // TextBoxSearch
             // 
@@ -296,7 +299,7 @@
             this.Controls.Add(this.ButtonSave);
             this.Controls.Add(this.TextBoxSearch);
             this.Controls.Add(this.ButtonSearch);
-            this.Controls.Add(this.ListViewDataStructure);
+            this.Controls.Add(this.ListViewWiki);
             this.Controls.Add(this.TextBoxDefinition);
             this.Controls.Add(this.TextBoxName);
             this.Controls.Add(this.LabelDefinition);
@@ -307,6 +310,7 @@
             this.Controls.Add(this.ButtonAdd);
             this.Name = "DataStructureWiki2";
             this.Text = "Data Structure Wiki 2";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DataStructureWiki2_FormClosing);
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
             this.GroupBoxStructure.ResumeLayout(false);
@@ -326,7 +330,7 @@
         private System.Windows.Forms.Label LabelDefinition;
         private System.Windows.Forms.TextBox TextBoxName;
         private System.Windows.Forms.TextBox TextBoxDefinition;
-        private System.Windows.Forms.ListView ListViewDataStructure;
+        private System.Windows.Forms.ListView ListViewWiki;
         private System.Windows.Forms.Button ButtonSearch;
         private System.Windows.Forms.TextBox TextBoxSearch;
         private System.Windows.Forms.Button ButtonSave;

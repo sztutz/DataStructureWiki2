@@ -22,7 +22,7 @@ namespace DataStructureWiki2
 
         // 6.2 Create a global List<T> of type Information called Wiki.
 
-        List<Information> DataStructures = new List<Information>();
+        List<Information> Wiki = new List<Information>();
 
         // 6.3 Create a button method to ADD a new item to the list. Use a TextBox for the Name
         // input, ComboBox for the Category, Radio group for the Structure and Multiline TextBox
@@ -49,8 +49,9 @@ namespace DataStructureWiki2
                 information.SetStructure("Non-Linear");
             }
             information.SetDefinition(TextBoxDefinition.Text); // needs error handling
-            DataStructures.Add(information);
-            UpdateListViewDataStructure();
+            Wiki.Add(information);
+            UpdateListViewWiki();
+            ClearInformation();
         }
         #endregion
 
@@ -59,7 +60,7 @@ namespace DataStructureWiki2
 
         private void PopulateComboBox()
         {
-            foreach (string line in File.ReadLines("Categories.txt"))
+            foreach (string line in File.ReadLines("Categories.txt")) // this needs to be fixed
             {
                 ComboBoxCategory.Items.Add(line);
             }
@@ -69,15 +70,47 @@ namespace DataStructureWiki2
         // Textbox Name and returns a Boolean after checking for duplicates. Use the built in
         // List<T> method “Exists” to answer this requirement.
 
-        private bool ValidName(string name)
+        private bool ValidName(string name) // needs to be implemented
         {
-            return DataStructures.Exists(x => x.GetName() == name);
+            return Wiki.Exists(x => x.GetName() == name);
         }
 
         // 6.6 Create two methods to highlight and return the values from the Radio button
         // GroupBox. The first method must return a string value from the selected radio button
         // (Linear or Non-Linear). The second method must send an integer index which will
         // highlight an appropriate radio button.
+        #region Structure Selection
+        // Checks which radio button within the Structure group box is checked and returns the 
+        // structure as a string
+        private string GetStructureRadioButton()
+        {
+            string structure = "";
+            foreach (RadioButton radioButton in GroupBoxStructure.Controls.OfType<RadioButton>())
+            {
+                if (radioButton.Checked)
+                {
+                    structure = radioButton.Text;
+                }
+            }
+            return structure;
+        }
+
+        // Checks the respective radio button within the Structure group box
+        private void SetStructureRadioButton(int index)
+        {
+            foreach (RadioButton radioButton in GroupBoxStructure.Controls.OfType<RadioButton>())
+            {
+                if (radioButton.Text == Wiki[index].GetStructure())
+                {
+                    radioButton.Checked = true;
+                }
+                else
+                {
+                    radioButton.Checked = false;
+                }
+            }
+        }
+        #endregion
 
         // 6.7 Create a button method that will delete the currently selected record in the
         // ListView. Ensure the user has the option to backout of this action by using a dialog
@@ -86,19 +119,19 @@ namespace DataStructureWiki2
         private void ButtonDelete_Click(object sender, EventArgs e)
         {
             // Checking that there is an item selected
-            if (ListViewDataStructure.SelectedIndices.Count == 1)
+            if (ListViewWiki.SelectedIndices.Count == 1)
             {
                 var result = MessageBox.Show("Do you want to delete this item?", "Delete", 
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     // Getting the index of the selected item
-                    int index = ListViewDataStructure.SelectedIndices[0];
-                    string name = DataStructures[index].GetName();
-                    ListViewDataStructure.Items.RemoveAt(index);
-                    DataStructures.RemoveAt(index);
+                    int index = ListViewWiki.SelectedIndices[0];
+                    string name = Wiki[index].GetName();
+                    ListViewWiki.Items.RemoveAt(index);
+                    Wiki.RemoveAt(index);
                     LabelStatusStrip.Text = name + " deleted";
-                    UpdateListViewDataStructure();
+                    UpdateListViewWiki();
                 }
             }
             else
@@ -113,14 +146,14 @@ namespace DataStructureWiki2
 
         private void ButtonEdit_Click(object sender, EventArgs e)
         {
-            if (ListViewDataStructure.SelectedIndices.Count == 1)
+            if (ListViewWiki.SelectedIndices.Count == 1)
             {
                 var result = MessageBox.Show("Do you want to edit this item?", "Edit",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    int index = ListViewDataStructure.SelectedIndices[0];
-                    DataStructures.RemoveAt(index);
+                    int index = ListViewWiki.SelectedIndices[0];
+                    Wiki.RemoveAt(index);
                     AddToList();
                     LabelStatusStrip.Text = TextBoxName.Text + " edited";
                 }
@@ -134,21 +167,21 @@ namespace DataStructureWiki2
         // 6.9 Create a single custom method that will sort and then display the Name and Category
         // from the wiki information in the list.
 
-        private void UpdateListViewDataStructure()
+        private void UpdateListViewWiki()
         {
             // Clear the List View
-            ListViewDataStructure.Items.Clear();
+            ListViewWiki.Items.Clear();
             // Sort the List
-            DataStructures.Sort();
+            Wiki.Sort();
             // Iterate through the List
-            for (int x = 0; x < DataStructures.Count; x++)
+            for (int x = 0; x < Wiki.Count; x++)
             {
                 // Creating the Name item
-                ListViewItem item = new ListViewItem(DataStructures[x].GetName());
+                ListViewItem item = new ListViewItem(Wiki[x].GetName());
                 // Creating the Category subitem
-                item.SubItems.Add(DataStructures[x].GetCategory());
+                item.SubItems.Add(Wiki[x].GetCategory());
                 // Adding the item to the List View
-                ListViewDataStructure.Items.Add(item);
+                ListViewWiki.Items.Add(item);
             }
         }
 
@@ -157,15 +190,60 @@ namespace DataStructureWiki2
         // appropriate input controls and highlight the name in the ListView. At the end of the
         // search process the search input TextBox must be cleared.
 
+        private void ButtonSearch_Click(object sender, EventArgs e) // needs error handling
+        {
+            string searchName = TextBoxSearch.Text;
+            Information searchDataStructure = new Information();
+            searchDataStructure.SetName(searchName);
+            int index = Wiki.BinarySearch(searchDataStructure);
+            if (index >= 0)
+            {
+                ShowInformation(index);
+                ListViewWiki.Items[index].Selected = true;
+                LabelStatusStrip.Text = searchName + " found";
+            }
+            else
+            {
+                LabelStatusStrip.Text = searchName + " not found";
+            }
+            TextBoxSearch.Text = "";
+            TextBoxSearch.Focus();
+        }
+
         // 6.11 Create a ListView event so a user can select a Data Structure Name from the list of
         // Names and the associated information will be displayed in the related text boxes combo
         // box and radio button.
+        private void ListViewWiki_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ListViewWiki.SelectedIndices.Count == 1)
+            {
+                int index = ListViewWiki.SelectedIndices[0];
+                ShowInformation(index);
+            }
+        }
 
         // 6.12 Create a custom method that will clear and reset the TextBoxes, ComboBox and Radio
         // button
 
+        private void ClearInformation()
+        {
+            TextBoxName.Clear();
+            ComboBoxCategory.ResetText();
+            foreach (RadioButton radioButton in GroupBoxStructure.Controls.OfType<RadioButton>())
+            {
+                radioButton.Checked = false;
+            }
+            TextBoxDefinition.Clear();
+            LabelStatusStrip.Text = "Cleared";
+        }
+
         // 6.13 Create a double click event on the Name TextBox to clear the TextBboxes, ComboBox
         // and Radio button.
+
+        private void TextBoxName_DoubleClick(object sender, EventArgs e)
+        {
+            ClearInformation();
+        }
 
         // 6.14 Create two buttons for the manual open and save option; this must use a dialog box
         // to select a file or rename a saved file. All Wiki data is stored/retrieved using a
@@ -188,12 +266,12 @@ namespace DataStructureWiki2
                     {
                         using (var writer = new BinaryWriter(stream, Encoding.UTF8, false))
                         {
-                            for (int x = 0; x < DataStructures.Count; x++)
+                            for (int x = 0; x < Wiki.Count; x++)
                             {
-                                writer.Write(DataStructures[x].GetName());
-                                writer.Write(DataStructures[x].GetCategory());
-                                writer.Write(DataStructures[x].GetStructure());
-                                writer.Write(DataStructures[x].GetDefinition());
+                                writer.Write(Wiki[x].GetName());
+                                writer.Write(Wiki[x].GetCategory());
+                                writer.Write(Wiki[x].GetStructure());
+                                writer.Write(Wiki[x].GetDefinition());
                             }
                         }
                     }
@@ -216,7 +294,7 @@ namespace DataStructureWiki2
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 // Clear the current list of data structures
-                DataStructures.Clear();
+                Wiki.Clear();
 
                 string openFileName = Path.GetFileName(openFileDialog.FileName);
                 try
@@ -228,7 +306,7 @@ namespace DataStructureWiki2
                             while (stream.Position < stream.Length)
                             {
                                 Information information = new Information();
-                                DataStructures.Add(information);
+                                Wiki.Add(information);
                                 information.SetName(reader.ReadString());
                                 information.SetCategory(reader.ReadString());
                                 information.SetStructure(reader.ReadString());
@@ -243,15 +321,50 @@ namespace DataStructureWiki2
                 }
                 LabelStatusStrip.Text = openFileName + " loaded";
             }
-            UpdateListViewDataStructure();
+            UpdateListViewWiki();
         }
+
         #endregion
 
         // 6.15 The Wiki application will save data when the form closes. 
+
+        private async void DataStructureWiki2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                using (Stream stream = File.Open("AutoSave", FileMode.Create))
+                {
+                    using (var writer = new BinaryWriter(stream, Encoding.UTF8, false))
+                    {
+                         for (int x = 0; x < Wiki.Count; x++)
+                        {
+                            writer.Write(Wiki[x].GetName());
+                            writer.Write(Wiki[x].GetCategory());
+                            writer.Write(Wiki[x].GetStructure());
+                            writer.Write(Wiki[x].GetDefinition());
+                        }
+                    }
+                }
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
+        }
 
         // 6.16 All code is required to be adequately commented. Map the programming criteria and
         // features to your code/methods by adding comments above the method signatures. Ensure
         // your code is compliant with the CITEMS coding standards (refer http://www.citems.com.au/).
 
+
+        // Shows the properties of the data structure at parameter int index within List Wiki
+        private void ShowInformation(int index)
+        {
+            TextBoxName.Text = Wiki[index].GetName();
+            ComboBoxCategory.Text = Wiki[index].GetCategory();
+            SetStructureRadioButton(index);
+            TextBoxDefinition.Text = Wiki[index].GetCategory();
+        }
     }
 }

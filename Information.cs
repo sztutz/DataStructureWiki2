@@ -14,55 +14,55 @@ namespace DataStructureWiki2
 {
     internal class Information : IComparable<Information>
     {
-        private string Name;
-        private string Category;
-        private string Structure;
-        private string Definition;
+        private string _name;
+        private string _category;
+        private string _structure;
+        private string _definition;
 
         public int CompareTo(Information other)
         {
             // The data structure comparison depends on the comparison of the String name values.
-            return Name.CompareTo(other.Name);
+            return _name.CompareTo(other._name);
         }
 
         public string GetName()
         {
-            return Name;
+            return _name;
         }
 
         public void SetName(string name)
         {
-            Name = name;
+            _name = name;
         }
 
         public string GetCategory()
         {
-            return Category;
+            return _category;
         }
 
         public void SetCategory(string category)
         {
-            Category = category;
+            _category = category;
         }
 
         public string GetStructure()
         {
-            return Structure;
+            return _structure;
         }
 
         public void SetStructure(string structure)
         {
-            Structure = structure;
+            _structure = structure;
         }
 
         public string GetDefinition()
         {
-            return Definition;
+            return _definition;
         }
 
         public void SetDefinition(string definition)
         {
-            Definition = definition;
+            _definition = definition;
         }
     }
 }

@@ -30,15 +30,93 @@ namespace DataStructureWiki2
         #region Add
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
-            AddToList();            
-            LabelStatusStrip.Text = TextBoxName.Text + " added";
+            // Create an instance of information.
+            Information information = new Information();
+            // This boolean will be false if any of the inputs do not meet the accepted criteria.
+            bool valid = true;
+
+            // Name
+            if (!string.IsNullOrWhiteSpace(TextBoxName.Text))
+            {
+                if (ValidName(TextBoxName.Text))
+                {
+                    information.SetName(TextBoxName.Text);
+                }
+                else
+                {
+                    MessageBox.Show("Name can not be duplicated.");
+                    valid = false;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Name must contain atleast one character.");
+                valid = false;
+            }
+            information.SetName(TextBoxName.Text);
+
+            // Category
+            if (!string.IsNullOrWhiteSpace(ComboBoxCategory.Text))
+            {
+                information.SetCategory(ComboBoxCategory.Text);
+            }
+            else
+            {
+                MessageBox.Show("Category must contain atleast one character.");
+                valid = false;
+            }
+
+            // Structure
+            if (RadioButtonLinear.Checked)
+            {
+                information.SetStructure("Linear");
+            }
+            else if (RadioButtonNonLinear.Checked)
+            {
+                information.SetStructure("Non-Linear");
+            }
+            else
+            {
+                MessageBox.Show("A structure must be checked.");
+                valid = false;
+            }
+
+            // Definition
+            if (!string.IsNullOrWhiteSpace(TextBoxDefinition.Text))
+            {
+                information.SetDefinition(TextBoxDefinition.Text);
+            }
+            else
+            {
+                MessageBox.Show("Definition must not be empty.");
+                valid = false;
+            }
+
+            // Adding information to the wiki if all criteria are met.
+            if (valid)
+            {
+                Wiki.Add(information);
+                UpdateListViewWiki();
+                ClearInformation();
+                LabelStatusStrip.Text = TextBoxName.Text + " added";
+            }
         }
-        // This method exists because it used by the ButtonAdd_Click method and the
-        // ButtonEdit_Click method
+        // The AddToList method is seperate because the edit button calls it aswell
         private void AddToList()
         {
             Information information = new Information();
-            information.SetName(TextBoxName.Text); // needs error handling, use ValidName()
+            if (!string.IsNullOrWhiteSpace(TextBoxName.Text))
+            {
+                if (ValidName(TextBoxName.Text))
+                {
+                    information.SetName(TextBoxName.Text);
+                }
+                else
+                {
+                    MessageBox.Show("");
+                }
+            }
+            information.SetName(TextBoxName.Text);
             information.SetCategory(ComboBoxCategory.Text); // needs error handling
             if (RadioButtonLinear.Checked) // needs error handling
             {
@@ -249,7 +327,7 @@ namespace DataStructureWiki2
         // 6.14 Create two buttons for the manual open and save option; this must use a dialog box
         // to select a file or rename a saved file. All Wiki data is stored/retrieved using a
         // binary reader/writer file format.
-        #region Save & Load
+        #region Save&Load
         private void ButtonSave_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();

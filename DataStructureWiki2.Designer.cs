@@ -123,6 +123,7 @@
             this.TextBoxName.Size = new System.Drawing.Size(192, 20);
             this.TextBoxName.TabIndex = 7;
             this.TextBoxName.DoubleClick += new System.EventHandler(this.TextBoxName_DoubleClick);
+            this.TextBoxName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxName_KeyPress);
             // 
             // TextBoxDefinition
             // 

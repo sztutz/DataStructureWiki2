@@ -30,6 +30,22 @@ namespace DataStructureWiki2
         #region Add
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
+            if (ValidName(TextBoxName.Text))
+            {
+                // Adding information to the wiki if all criteria are met.
+                if (EnterInformation())
+                {
+                    UpdateListViewWiki();
+                    LabelStatusStrip.Text = TextBoxName.Text + " added";
+                    ClearInformation();
+                }
+            }
+        }
+        // Validates all four inputs. If valid; enters information to ListWiki, and returns true. 
+        // If invalid; returns false.
+
+        private bool EnterInformation()
+        {
             // Create an instance of information.
             Information information = new Information();
             // This boolean will be false if any of the inputs do not meet the accepted criteria.
@@ -38,15 +54,7 @@ namespace DataStructureWiki2
             // Name
             if (!string.IsNullOrWhiteSpace(TextBoxName.Text))
             {
-                if (ValidName(TextBoxName.Text))
-                {
                     information.SetName(TextBoxName.Text);
-                }
-                else
-                {
-                    MessageBox.Show("Name can not be duplicated.");
-                    valid = false;
-                }
             }
             else
             {
@@ -91,45 +99,8 @@ namespace DataStructureWiki2
                 MessageBox.Show("Definition must not be empty.");
                 valid = false;
             }
-
-            // Adding information to the wiki if all criteria are met.
-            if (valid)
-            {
-                Wiki.Add(information);
-                UpdateListViewWiki();
-                ClearInformation();
-                LabelStatusStrip.Text = TextBoxName.Text + " added";
-            }
-        }
-        // The AddToList method is seperate because the edit button calls it aswell
-        private void AddToList()
-        {
-            Information information = new Information();
-            if (!string.IsNullOrWhiteSpace(TextBoxName.Text))
-            {
-                if (ValidName(TextBoxName.Text))
-                {
-                    information.SetName(TextBoxName.Text);
-                }
-                else
-                {
-                    MessageBox.Show("");
-                }
-            }
-            information.SetName(TextBoxName.Text);
-            information.SetCategory(ComboBoxCategory.Text); // needs error handling
-            if (RadioButtonLinear.Checked) // needs error handling
-            {
-                information.SetStructure("Linear");
-            }
-            else if (RadioButtonNonLinear.Checked)
-            {
-                information.SetStructure("Non-Linear");
-            }
-            information.SetDefinition(TextBoxDefinition.Text); // needs error handling
             Wiki.Add(information);
-            UpdateListViewWiki();
-            ClearInformation();
+            return valid;
         }
         #endregion
 
@@ -148,12 +119,22 @@ namespace DataStructureWiki2
         // 6.5 Create a custom ValidName method which will take a parameter string value from the
         // Textbox Name and returns a Boolean after checking for duplicates. Use the built in
         // List<T> method “Exists” to answer this requirement.
-
+        #region ValidName
         private bool ValidName(string name) // needs to be implemented
         {
-            return Wiki.Exists(x => x.GetName() == name);
+            bool valid;   
+            if (Wiki.Exists(x => x.GetName() == name))
+            {
+                MessageBox.Show("Name can not be duplicated.");
+                valid = false;
+            }
+            else
+            {
+                valid = true;
+            }
+            return valid;
         }
-
+        #endregion
         // 6.6 Create two methods to highlight and return the values from the Radio button
         // GroupBox. The first method must return a string value from the selected radio button
         // (Linear or Non-Linear). The second method must send an integer index which will
@@ -194,7 +175,7 @@ namespace DataStructureWiki2
         // 6.7 Create a button method that will delete the currently selected record in the
         // ListView. Ensure the user has the option to backout of this action by using a dialog
         // box. Display an updated version of the sorted list at the end of this process.
-
+        #region Delete
         private void ButtonDelete_Click(object sender, EventArgs e)
         {
             // Checking that there is an item selected
@@ -218,23 +199,32 @@ namespace DataStructureWiki2
                 MessageBox.Show("There is no item selected to delete");
             }
         }
-
+        #endregion
         // 6.8 Create a button method that will save the edited record of the currently selected
         // item in the ListView. All the changes in the input controls will be written back to the
         // list. Display an updated version of the sorted list at the end of this process.
-
+        #region edit
         private void ButtonEdit_Click(object sender, EventArgs e)
         {
             if (ListViewWiki.SelectedIndices.Count == 1)
             {
-                var result = MessageBox.Show("Do you want to edit this item?", "Edit",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
+                int index = ListViewWiki.SelectedIndices[0];
+                if ((TextBoxName.Text != Wiki[index].GetName() && ValidName(TextBoxName.Text))
+                    || TextBoxName.Text == Wiki[index].GetName())
                 {
-                    int index = ListViewWiki.SelectedIndices[0];
-                    Wiki.RemoveAt(index);
-                    AddToList();
-                    LabelStatusStrip.Text = TextBoxName.Text + " edited";
+                    var result = MessageBox.Show("Do you want to edit this item?", "Edit",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+
+                        if (EnterInformation())
+                        {
+                            Wiki.RemoveAt(index);
+                            LabelStatusStrip.Text = TextBoxName.Text + " edited";
+                            ClearInformation();
+                            UpdateListViewWiki();
+                        }
+                    }
                 }
             }
             else
@@ -242,7 +232,7 @@ namespace DataStructureWiki2
                 LabelStatusStrip.Text = " There is no data structure selected to edit";
             }
         }
-
+        #endregion
         // 6.9 Create a single custom method that will sort and then display the Name and Category
         // from the wiki information in the list.
 
@@ -446,6 +436,14 @@ namespace DataStructureWiki2
             ComboBoxCategory.Text = Wiki[index].GetCategory();
             SetStructureRadioButton(index);
             TextBoxDefinition.Text = Wiki[index].GetCategory();
+        }
+
+        private void TextBoxName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && e.KeyChar != '-' && e.KeyChar != (char)Keys.Back && e.KeyChar != ' ')
+            {
+                e.Handled = true;
+            }    
         }
     }
 }

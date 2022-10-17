@@ -139,6 +139,7 @@
             this.columnHeaderName,
             this.columnHeaderCategory});
             this.ListViewWiki.FullRowSelect = true;
+            this.ListViewWiki.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ListViewWiki.HideSelection = false;
             this.ListViewWiki.Location = new System.Drawing.Point(216, 25);
             this.ListViewWiki.MultiSelect = false;
@@ -148,7 +149,7 @@
             this.ListViewWiki.TabIndex = 11;
             this.ListViewWiki.UseCompatibleStateImageBehavior = false;
             this.ListViewWiki.View = System.Windows.Forms.View.Details;
-            this.ListViewWiki.SelectedIndexChanged += new System.EventHandler(this.ListViewWiki_SelectedIndexChanged);
+            this.ListViewWiki.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListViewWiki_MouseClick);
             // 
             // columnHeaderName
             // 

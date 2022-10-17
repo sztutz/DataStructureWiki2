@@ -30,6 +30,7 @@ namespace DataStructureWiki2
         #region Add
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
+            // Check that name is not duplicated.
             if (ValidName(TextBoxName.Text))
             {
                 // Adding information to the wiki if all criteria are met.
@@ -282,14 +283,6 @@ namespace DataStructureWiki2
         // 6.11 Create a ListView event so a user can select a Data Structure Name from the list of
         // Names and the associated information will be displayed in the related text boxes combo
         // box and radio button.
-        private void ListViewWiki_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (ListViewWiki.SelectedIndices.Count == 1)
-            {
-                int index = ListViewWiki.SelectedIndices[0];
-                ShowInformation(index);
-            }
-        }
 
         // 6.12 Create a custom method that will clear and reset the TextBoxes, ComboBox and Radio
         // button
@@ -444,6 +437,20 @@ namespace DataStructureWiki2
             {
                 e.Handled = true;
             }    
+        }
+
+        private void ListViewWiki_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ListViewWiki_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (ListViewWiki.SelectedIndices.Count == 1)
+            {
+                int index = ListViewWiki.SelectedIndices[0];
+                ShowInformation(index);
+            }
         }
     }
 }

@@ -150,8 +150,7 @@
             this.ListViewWiki.TabIndex = 11;
             this.ListViewWiki.UseCompatibleStateImageBehavior = false;
             this.ListViewWiki.View = System.Windows.Forms.View.Details;
-            this.ListViewWiki.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ListViewWiki_ItemSelectionChanged_1);
-            this.ListViewWiki.SelectedIndexChanged += new System.EventHandler(this.ListViewWiki_SelectedIndexChanged);
+            this.ListViewWiki.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ListViewWiki_ItemSelectionChanged);
             this.ListViewWiki.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListViewWiki_MouseClick);
             // 
             // columnHeaderName
@@ -181,6 +180,7 @@
             this.TextBoxSearch.Name = "TextBoxSearch";
             this.TextBoxSearch.Size = new System.Drawing.Size(192, 20);
             this.TextBoxSearch.TabIndex = 13;
+            this.TextBoxSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxSearch_KeyPress);
             // 
             // ButtonSave
             // 

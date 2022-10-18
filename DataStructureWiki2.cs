@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DataStructureWiki2
@@ -256,7 +252,7 @@ namespace DataStructureWiki2
         // Structure name. If the record is found the associated details will populate the
         // appropriate input controls and highlight the name in the ListView. At the end of the
         // search process the search input TextBox must be cleared.
-
+        #region Search
         private void ButtonSearch_Click(object sender, EventArgs e) // needs error handling
         {
             string searchName = TextBoxSearch.Text;
@@ -277,7 +273,20 @@ namespace DataStructureWiki2
             TextBoxSearch.Text = "";
             TextBoxSearch.Focus();
         }
-
+        // Only allows alphabetic characters and hyphens to be entered into the TextBox
+        // When focused on the search text box, pressing enter will click the search button
+        private void TextBoxSearch_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && e.KeyChar != '-' && e.KeyChar != (char)Keys.Back && e.KeyChar != ' ')
+            {
+                e.Handled = true;
+            }
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                ButtonSearch.PerformClick();
+            }
+        }
+        #endregion
         // 6.11 Create a ListView event so a user can select a Data Structure Name from the list of
         // Names and the associated information will be displayed in the related text boxes combo
         // box and radio button.
@@ -429,17 +438,13 @@ namespace DataStructureWiki2
             TextBoxDefinition.Text = Wiki[index].GetCategory();
         }
 
+        // Only allows alphabetic characters and hyphens to be entered in TextBox
         private void TextBoxName_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsLetter(e.KeyChar) && e.KeyChar != '-' && e.KeyChar != (char)Keys.Back && e.KeyChar != ' ')
             {
                 e.Handled = true;
-            }    
-        }
-
-        private void ListViewWiki_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-
+            }
         }
 
         private void ListViewWiki_MouseClick(object sender, MouseEventArgs e)
@@ -451,51 +456,18 @@ namespace DataStructureWiki2
             }
         }
 
-        private void ListViewWiki_ItemSelectionChanged_1(object sender, ListViewItemSelectionChangedEventArgs e)
+        private void ListViewWiki_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            Console.WriteLine("selection changed");
             if (e.IsSelected)
             {
-                Console.WriteLine(e.ItemIndex + " is selected");
                 e.Item.BackColor = Color.LawnGreen;
+                Console.WriteLine(e.ItemIndex + " selected");
             }
             else
             {
-                Console.WriteLine(e.ItemIndex + " unselected");
                 e.Item.BackColor = Color.White;
-            }    
-            //foreach (ListViewItem item in ListViewWiki.SelectedItems)
-            //{
-            //    item.BackColor = Color.LightSeaGreen;
-            //}
-            //foreach (ListViewItem item in ListViewWiki.Items)
-            //{
-            //    if (item.Selected)
-            //    {
-            //        item.BackColor = Color.LightSeaGreen;
-            //    }
-            //    else
-            //    {
-            //        item.BackColor = Color.White;
-            //    }
-            //}
-        }
-
-        private void ListViewWiki_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //Console.WriteLine("index changed");
-            //foreach (ListViewItem item in ListViewWiki.Items)
-            //{
-            //    if (item.Selected)
-            //    {
-            //        item.BackColor = Color.LightSeaGreen;
-            //        ListViewWiki.SelectedItem
-            //    }
-            //    else
-            //    {
-            //        item.BackColor = Color.White;
-            //    }
-            //}
+                Console.WriteLine(e.ItemIndex + " unselected");
+            }
         }
     }
 }

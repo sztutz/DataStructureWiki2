@@ -61,6 +61,7 @@ namespace DataStructureWiki2
             information.SetStructure(GetStructureRadioButton());
 
             // Definition
+            //information.SetDefinition(TextBoxDefinition.Text);
             information.SetDefinition(TextBoxDefinition.Text);
 
             Wiki.Add(information);
@@ -324,7 +325,7 @@ namespace DataStructureWiki2
             TextBoxName.Text = Wiki[index].GetName();
             ComboBoxCategory.Text = Wiki[index].GetCategory();
             SetStructureRadioButton(index);
-            TextBoxDefinition.Text = Wiki[index].GetCategory();
+            TextBoxDefinition.Text = Wiki[index].GetDefinition();
             LabelStatusStrip.Text = Wiki[index].GetName();
         }
         #endregion

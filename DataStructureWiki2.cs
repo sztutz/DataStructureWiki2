@@ -267,7 +267,7 @@ namespace DataStructureWiki2
             {
                 ShowInformation(index);
                 ListViewWiki.Items[index].Selected = true;
-                ListViewWiki.Items[index].BackColor = Color.LawnGreen;
+                //ListViewWiki.Items[index].BackColor = Color.LawnGreen;
                 LabelStatusStrip.Text = searchName + " found";
             }
             else
@@ -449,6 +449,53 @@ namespace DataStructureWiki2
                 int index = ListViewWiki.SelectedIndices[0];
                 ShowInformation(index);
             }
+        }
+
+        private void ListViewWiki_ItemSelectionChanged_1(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            Console.WriteLine("selection changed");
+            if (e.IsSelected)
+            {
+                Console.WriteLine(e.ItemIndex + " is selected");
+                e.Item.BackColor = Color.LawnGreen;
+            }
+            else
+            {
+                Console.WriteLine(e.ItemIndex + " unselected");
+                e.Item.BackColor = Color.White;
+            }    
+            //foreach (ListViewItem item in ListViewWiki.SelectedItems)
+            //{
+            //    item.BackColor = Color.LightSeaGreen;
+            //}
+            //foreach (ListViewItem item in ListViewWiki.Items)
+            //{
+            //    if (item.Selected)
+            //    {
+            //        item.BackColor = Color.LightSeaGreen;
+            //    }
+            //    else
+            //    {
+            //        item.BackColor = Color.White;
+            //    }
+            //}
+        }
+
+        private void ListViewWiki_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Console.WriteLine("index changed");
+            //foreach (ListViewItem item in ListViewWiki.Items)
+            //{
+            //    if (item.Selected)
+            //    {
+            //        item.BackColor = Color.LightSeaGreen;
+            //        ListViewWiki.SelectedItem
+            //    }
+            //    else
+            //    {
+            //        item.BackColor = Color.White;
+            //    }
+            //}
         }
     }
 }

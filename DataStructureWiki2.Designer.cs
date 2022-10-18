@@ -135,12 +135,13 @@
             // 
             // ListViewWiki
             // 
+            this.ListViewWiki.BackColor = System.Drawing.Color.White;
             this.ListViewWiki.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderName,
             this.columnHeaderCategory});
             this.ListViewWiki.FullRowSelect = true;
             this.ListViewWiki.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ListViewWiki.HideSelection = false;
+            this.ListViewWiki.HideSelection = true;
             this.ListViewWiki.Location = new System.Drawing.Point(216, 25);
             this.ListViewWiki.MultiSelect = false;
             this.ListViewWiki.Name = "ListViewWiki";
@@ -149,6 +150,8 @@
             this.ListViewWiki.TabIndex = 11;
             this.ListViewWiki.UseCompatibleStateImageBehavior = false;
             this.ListViewWiki.View = System.Windows.Forms.View.Details;
+            this.ListViewWiki.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ListViewWiki_ItemSelectionChanged_1);
+            this.ListViewWiki.SelectedIndexChanged += new System.EventHandler(this.ListViewWiki_SelectedIndexChanged);
             this.ListViewWiki.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListViewWiki_MouseClick);
             // 
             // columnHeaderName

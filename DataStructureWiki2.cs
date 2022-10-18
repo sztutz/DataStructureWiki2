@@ -34,8 +34,9 @@ namespace DataStructureWiki2
             if (ValidName(TextBoxName.Text))
             {
                 // Adding information to the wiki if all criteria are met.
-                if (EnterInformation())
+                if (ValidInformation())
                 {
+                    EnterInformation();
                     UpdateListViewWiki();
                     LabelStatusStrip.Text = TextBoxName.Text + " added";
                     ClearInformation();
@@ -45,32 +46,40 @@ namespace DataStructureWiki2
         // Validates all four inputs. If valid; enters information to ListWiki, and returns true. 
         // If invalid; returns false.
 
-        private bool EnterInformation()
+        private void EnterInformation()
         {
             // Create an instance of information.
             Information information = new Information();
+
+            // Name
+            information.SetName(TextBoxName.Text);
+
+            // Category
+            information.SetCategory(ComboBoxCategory.Text);
+
+            // Structure
+            information.SetStructure(GetStructureRadioButton());
+
+            // Definition
+            information.SetDefinition(TextBoxDefinition.Text);
+
+            Wiki.Add(information);
+        }
+        private bool ValidInformation()
+        {
             // This boolean will be false if any of the inputs do not meet the accepted criteria.
             bool valid = true;
             string errorMessage = "";
 
             // Name
-            if (!string.IsNullOrWhiteSpace(TextBoxName.Text))
-            {
-                    information.SetName(TextBoxName.Text);
-            }
-            else
+            if (string.IsNullOrWhiteSpace(TextBoxName.Text))
             {
                 valid = false;
                 errorMessage = "# Name must contain atleast one character.\n\n";
             }
-            information.SetName(TextBoxName.Text);
 
             // Category
-            if (!string.IsNullOrWhiteSpace(ComboBoxCategory.Text))
-            {
-                information.SetCategory(ComboBoxCategory.Text);
-            }
-            else
+            if (string.IsNullOrWhiteSpace(ComboBoxCategory.Text))
             {
                 valid = false;
                 errorMessage += "# Category must contain atleast one character.\n\n";
@@ -80,29 +89,17 @@ namespace DataStructureWiki2
             if (GetStructureRadioButton() == "")
             {
                 valid = false;
-                //errorCount++;
                 errorMessage += "# A structure must be checked.\n\n";
-            }
-            else
-            {
-                information.SetStructure(GetStructureRadioButton());
             }
 
             // Definition
-            if (!string.IsNullOrWhiteSpace(TextBoxDefinition.Text))
-            {
-                information.SetDefinition(TextBoxDefinition.Text);
-            }
-            else
+            if (string.IsNullOrWhiteSpace(TextBoxDefinition.Text))
             {
                 valid = false;
                 errorMessage += "# Definition must contain atleast one character.";
             }
-            if (valid)
-            {
-                Wiki.Add(information);
-            }
-            else
+
+            if (!valid)
             {
                 MessageBox.Show(errorMessage, "Input Error");
             }
@@ -222,13 +219,13 @@ namespace DataStructureWiki2
                 if ((TextBoxName.Text != Wiki[index].GetName() && ValidName(TextBoxName.Text))
                     || TextBoxName.Text == Wiki[index].GetName())
                 {
-                    var result = MessageBox.Show("Do you want to edit this item?", "Edit",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
+                    if (ValidInformation())
                     {
-
-                        if (EnterInformation())
+                        var result = MessageBox.Show("Do you want to edit this item?", "Edit",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (result == DialogResult.Yes)
                         {
+                            EnterInformation();
                             Wiki.RemoveAt(index);
                             LabelStatusStrip.Text = TextBoxName.Text + " edited";
                             ClearInformation();

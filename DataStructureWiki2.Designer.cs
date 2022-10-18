@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.ButtonAdd = new System.Windows.Forms.Button();
             this.ButtonEdit = new System.Windows.Forms.Button();
             this.ButtonDelete = new System.Windows.Forms.Button();
@@ -52,6 +53,7 @@
             this.LabelStucture = new System.Windows.Forms.Label();
             this.LabelSearch = new System.Windows.Forms.Label();
             this.LabelDataStructures = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.StatusStrip.SuspendLayout();
             this.GroupBoxStructure.SuspendLayout();
             this.SuspendLayout();
@@ -122,6 +124,7 @@
             this.TextBoxName.Name = "TextBoxName";
             this.TextBoxName.Size = new System.Drawing.Size(192, 20);
             this.TextBoxName.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.TextBoxName, "Double click name text field to clear input fields.");
             this.TextBoxName.DoubleClick += new System.EventHandler(this.TextBoxName_DoubleClick);
             this.TextBoxName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxName_KeyPress);
             // 
@@ -352,6 +355,7 @@
         private System.Windows.Forms.ToolStripStatusLabel LabelStatusStrip;
         private System.Windows.Forms.ColumnHeader columnHeaderName;
         private System.Windows.Forms.ColumnHeader columnHeaderCategory;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

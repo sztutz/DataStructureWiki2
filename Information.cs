@@ -21,9 +21,17 @@ namespace DataStructureWiki2
 
         public int CompareTo(Information other)
         {
+            //return Compare(_name, other.Compare._name, false);
             // The data structure comparison depends on the comparison of the String name values.
-            return _name.CompareTo(other._name);
+            
+            return _name.ToLower().CompareTo(other._name.ToLower());
         }
+
+        //public int CompareTo(Information other, StringComparer comparer)
+        //{
+        //    // The data structure comparison depends on the comparison of the String name values.
+        //    return _name.CompareTo(other._name, StringComparer.OrdinalIgnoreCase);
+        //}
 
         public string GetName()
         {

@@ -76,18 +76,14 @@ namespace DataStructureWiki2
             }
 
             // Structure
-            if (RadioButtonLinear.Checked)
-            {
-                information.SetStructure("Linear");
-            }
-            else if (RadioButtonNonLinear.Checked)
-            {
-                information.SetStructure("Non-Linear");
-            }
-            else
+            if (GetStructureRadioButton() == "")
             {
                 MessageBox.Show("A structure must be checked.");
                 valid = false;
+            }
+            else
+            {
+                information.SetStructure(GetStructureRadioButton());
             }
 
             // Definition
@@ -101,6 +97,8 @@ namespace DataStructureWiki2
                 valid = false;
             }
             Wiki.Add(information);
+            // Sort the List
+            Wiki.Sort();
             return valid;
         }
         #endregion
@@ -124,7 +122,7 @@ namespace DataStructureWiki2
         private bool ValidName(string name) // needs to be implemented
         {
             bool valid;   
-            if (Wiki.Exists(x => x.GetName() == name))
+            if (Wiki.Exists(x => x.GetName().ToLower() == name.ToLower()))
             {
                 MessageBox.Show("Name can not be duplicated.");
                 valid = false;
@@ -193,6 +191,7 @@ namespace DataStructureWiki2
                     Wiki.RemoveAt(index);
                     LabelStatusStrip.Text = name + " deleted";
                     UpdateListViewWiki();
+                    ClearInformation();
                 }
             }
             else
@@ -241,8 +240,6 @@ namespace DataStructureWiki2
         {
             // Clear the List View
             ListViewWiki.Items.Clear();
-            // Sort the List
-            Wiki.Sort();
             // Iterate through the List
             for (int x = 0; x < Wiki.Count; x++)
             {
@@ -270,6 +267,7 @@ namespace DataStructureWiki2
             {
                 ShowInformation(index);
                 ListViewWiki.Items[index].Selected = true;
+                ListViewWiki.Items[index].BackColor = Color.LawnGreen;
                 LabelStatusStrip.Text = searchName + " found";
             }
             else
@@ -296,7 +294,6 @@ namespace DataStructureWiki2
                 radioButton.Checked = false;
             }
             TextBoxDefinition.Clear();
-            LabelStatusStrip.Text = "Cleared";
         }
 
         // 6.13 Create a double click event on the Name TextBox to clear the TextBboxes, ComboBox
@@ -305,6 +302,7 @@ namespace DataStructureWiki2
         private void TextBoxName_DoubleClick(object sender, EventArgs e)
         {
             ClearInformation();
+            LabelStatusStrip.Text = "Cleared";
         }
 
         // 6.14 Create two buttons for the manual open and save option; this must use a dialog box

@@ -14,6 +14,9 @@ namespace DataStructureWiki2
         {
             InitializeComponent();
             PopulateComboBox();
+            // This is here because some times it dissappears from the Designer code for an unknown
+            // reason.
+            ListViewWiki.HideSelection = true;
         }
 
         // 6.2 Create a global List<T> of type Information called Wiki.
@@ -453,20 +456,21 @@ namespace DataStructureWiki2
             {
                 int index = ListViewWiki.SelectedIndices[0];
                 ShowInformation(index);
+                // This takes focus away from the ListView, needed to show the desired color.
+                GroupBoxStructure.Focus();
             }
         }
 
+        // This makes the selected item and the unselected item change color.
         private void ListViewWiki_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             if (e.IsSelected)
             {
                 e.Item.BackColor = Color.LawnGreen;
-                Console.WriteLine(e.ItemIndex + " selected");
             }
             else
             {
                 e.Item.BackColor = Color.White;
-                Console.WriteLine(e.ItemIndex + " unselected");
             }
         }
     }

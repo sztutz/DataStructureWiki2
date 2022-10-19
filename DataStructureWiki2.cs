@@ -491,6 +491,8 @@ namespace DataStructureWiki2
                 e.Item.BackColor = Color.White;
             }
         }
+        // This method checks if TestData.bin exists. If it does not, then it moves the TestData
+        // from the solution folder to the debug folder
         private void LoadTestData()
         {
             if (!File.Exists("TestData.bin"))

@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E7680F44-28FF-4E04-A164-C396BB233F6E}"
 	ProjectSection(SolutionItems) = preProject
 		Categories.txt = Categories.txt
+		TestData.bin = TestData.bin
 	EndProjectSection
 EndProject
 Global

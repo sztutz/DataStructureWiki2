@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// Stuart Anderson, 30056472, 19/10/2022
+// C Sharp Two, Assessment Task Two
+
 namespace DataStructureWiki2
 
 // 6.1 Create a separate class file to hold the four data items of the Data Structure (use the Data

@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+// Stuart Anderson, 30056472, 19/10/2022
+// C Sharp Two, Assessment Task Two
+
 namespace DataStructureWiki2
 {
     public partial class DataStructureWiki2 : Form
@@ -14,6 +17,7 @@ namespace DataStructureWiki2
         {
             InitializeComponent();
             PopulateComboBox();
+            LoadTestData();
             // This is here because some times it dissappears from the Designer code for an unknown
             // reason.
             ListViewWiki.HideSelection = true;
@@ -485,6 +489,16 @@ namespace DataStructureWiki2
             else
             {
                 e.Item.BackColor = Color.White;
+            }
+        }
+        private void LoadTestData()
+        {
+            if (!File.Exists("TestData.bin"))
+            {
+                string sourcePath = Path.Combine(Application.StartupPath, @"..\..\TestData.bin");
+                string targetPath = Path.Combine(Application.StartupPath, @"TestData.bin");
+
+                System.IO.File.Copy(sourcePath, targetPath, true);
             }
         }
     }

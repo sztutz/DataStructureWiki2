@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 // Stuart Anderson, 30056472, 19/10/2022
 // C Sharp Two, Assessment Task Two
@@ -131,9 +132,11 @@ namespace DataStructureWiki2
         #region 6.5 ValidName
         private bool ValidName(string name) // needs to be implemented
         {
+
             bool valid;   
             if (Wiki.Exists(x => x.GetName().ToLower() == name.ToLower()))
             {
+                //Trace.TraceInformation("Item {0} exists", name);
                 MessageBox.Show("Name can not be duplicated.");
                 valid = false;
             }
@@ -141,6 +144,7 @@ namespace DataStructureWiki2
             {
                 valid = true;
             }
+            //Trace.TraceInformation("Return boolean equals {0}", valid);
             return valid;
         }
         #endregion
@@ -198,8 +202,10 @@ namespace DataStructureWiki2
                     // Getting the index of the selected item
                     int index = ListViewWiki.SelectedIndices[0];
                     string name = Wiki[index].GetName();
+                    // Trace.TraceInformation("Item at selected index {0}: {1}", index, Wiki[index].GetName());
                     ListViewWiki.Items.RemoveAt(index);
                     Wiki.RemoveAt(index);
+                    // Trace.TraceInformation("Item at selected index {0} after deletion: {1}", index, Wiki[index].GetName());
                     LabelStatusStrip.Text = name + " deleted";
                     UpdateListViewWiki();
                     ClearInformation();
@@ -230,11 +236,25 @@ namespace DataStructureWiki2
                         MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (result == DialogResult.Yes)
                         {
+                            //foreach(Information information in Wiki)
+                            //{
+                            //    Trace.TraceInformation("index: {0}, name: {1}, category: {2}, " +
+                            //        "structure: {3}", Wiki.IndexOf(information), 
+                            //        information.GetName(), information.GetCategory(), 
+                            //        information.GetStructure());
+                            //}
                             EnterInformation();
                             Wiki.RemoveAt(index);
                             LabelStatusStrip.Text = TextBoxName.Text + " edited";
                             ClearInformation();
                             UpdateListViewWiki();
+                            //foreach (Information information in Wiki)
+                            //{
+                            //    Trace.TraceInformation("index: {0}, name: {1}, category: {2}, " +
+                            //        "structure: {3}", Wiki.IndexOf(information),
+                            //        information.GetName(), information.GetCategory(),
+                            //        information.GetStructure());
+                            //}
                         }
                     }
                 }
